@@ -1,6 +1,8 @@
 from tkinter import *
-import backend
+from backend import Database
 
+
+database = Database()
 
 def clear_entry_fileds():
     title_entry.delete(0, END)
@@ -29,32 +31,29 @@ def get_selected_row(evt):
 
 def view_all_command():
     book_list.delete(0, END)
-    for book in backend.view():
+    for book in database.view():
         book_list.insert(END, book)
 
 
 def search_command():
     book_list.delete(0, END)
-    for book in backend.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
+    for book in database.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
         book_list.insert(END, book)
 
 
 def add_command():
-    backend.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+    database.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
     view_all_command()
 
 
 def update_command():
-    backend.update(selected_book[0],title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+    database.update(selected_book[0],title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
     view_all_command()
 
 
 def delete_command():
-    backend.delete(selected_book[0])
+    database.delete(selected_book[0])
     view_all_command()
-
-
-backend.init_db()
 
 window = Tk()
 
